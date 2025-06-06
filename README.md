@@ -3,64 +3,142 @@
 
 This project implements an Edge AI-based non-contact healthcare abnormality prediction system using Remote PPG (rPPG) signal analysis. The system leverages a Jetson Nano to process video input, extract facial images, perform image and signal processing, and predict cardiovascular abnormalities.
 
-**Features**
-Non-contact PPG Signal Analysis: Extracts PPG signals from facial video.
+This web application enables remote, real-time, non-contact heart rate monitoring via a webcam using deep learning (3D CNN). It includes:
 
-Deep Learning-Based Prediction: Uses a CNN-LSTM model to analyze rPPG signals.
+rPPG-based heart rate estimation
 
-Edge AI Acceleration: Optimized for Jetson Nano using CUDA acceleration.
+A lightweight UI in Streamlit
 
-Real-Time Health Monitoring: Provides insights into cardiovascular health abnormalities.
+Raga-based relaxation music based on Indian Time Theory
 
-Deployable as a Streamlit Web App: User-friendly interface for real-time monitoring.
-Installation & Setup
+Comparison with Apple Watch or oximeter
 
-**Prerequisites**
+Basic consultation booking system
 
-Jetson Nano Developer Kit
+🖥️ Prerequisites
+Software
+Python ≥ 3.7
 
-64GB microSD card (EVM Elite recommended)
+pip
 
-Python 3.8+
+Streamlit ≥ 1.0
 
-CUDA Toolkit (for Jetson Nano acceleration)
+TensorFlow ≥ 2.10
 
-PyTorch with GPU support
+OpenCV ≥ 4.5
 
-Step 1: Set Up Jetson Nano
+NumPy, SciPy, Matplotlib
 
-Flash Jetson Nano SD card using JetPack SDK.
+streamlit-option-menu
 
-Set up a virtual environment:
+Visual Studio Code
 
-sudo apt update && sudo apt upgrade
-python3 -m venv edge-ai-env
-source edge-ai-env/bin/activate
+Hardware
+Webcam (built-in or USB)
 
-Step 2: Install Dependencies
+Jetson Nano (for edge deployment)
 
-pip install -r requirements.txt
+Stable Internet
 
-Step 3: Run the Model
+Minimum 4 GB RAM
 
-To test the model on sample data:
+🗂️ Project Structure
+ Project 42/
+├── audio/                         # Raga-based music files
+├── tf29env/                      # Virtual environment (optional)
+├── retrain.py                    # Model training script
+├── web2.py                       # Streamlit web app
+├── rppg_heart_rate_cnn_final.h5  # Pre-trained 3D CNN model
+├── best_lightweight_rppg_model.h5 # Optimized edge model
+├── *.jpg, *.png                  # UI images
 
-python src/inference.py --video sample.mp4
+⚙️ Setup Instructions
+Step 1: Install Python
+Download from python.org
+Check version: python --version
 
-Step 4: Deploy as a Web App
+Step 2: Create Virtual Environment
+python -m venv tf29env
+Activate it:
 
-streamlit run src/streamlit_app.py
+Windows: .\tf29env\Scripts\activate
 
-**Dataset**
+macOS/Linux: source tf29env/bin/activate
 
-UBFC-RPPG Dataset: Used for training and validation.
+Step 3: Install Dependencies
+pip install streamlit opencv-python tensorflow numpy matplotlib scipy streamlit-option-menu
 
-Preprocessing Steps: Face detection, ROI extraction, signal filtering.
+🧠 Model Training 
+Download the UBFC-rPPG Dataset 2:
+https://drive.google.com/drive/folders/1q4vWuF2GJvKP5xyeX8dxaJ2fmq97-4ai 
 
-**Model Details**
+Structure:
 
-CNN-LSTM Hybrid Model
+/Dataset/subject_X/
+├── vid.avi
+└── ground_truth.txt
 
-Input: Extracted PPG signals from facial regions
 
-Output: Heart rate estimation and abnormality detection
+Train:
+
+python retrain.py
+🚀 Run the App
+Start the Streamlit app:
+
+streamlit run web2.py
+Opens in browser at: http://localhost:8501
+
+🧩 Features
+🏠 Home
+Project overview and intro image.
+
+🩺 Monitoring
+Live Camera: Real-time HR detection (~45s).
+
+Upload Video: Uses green channel to estimate BPM.
+
+🎵 Relaxation Module
+Time Theory of Ragas: plays audio based on current time (e.g., morning.mp3, evening.mp3).
+
+👨‍⚕️ Book Consultation
+Form to schedule appointments. Displays cardiologist details.
+
+🧠 How rPPG Works
+Illustrated explanation of the science behind the app.
+
+📊 Compare with Apple Watch
+Input and compare readings with your device manually.
+
+📞 Contact Us
+Contact details and team info.
+
+ℹ️ About Us
+Team mission, values, and vision.
+
+❗ Troubleshooting
+Issue	Reason	Solution
+ModuleNotFoundError	Missing libraries	pip install <package>
+Webcam not working	Driver/camera permissions	Enable & restart
+Missing .h5 file	Model not found	Check project folder
+Poor lighting warning	Dark room	Use better lighting
+Abnormal HR values	Motion artifacts	Stay still and retry
+
+☁️ Deployment Options
+Host on Streamlit Cloud
+
+Dockerize for cross-platform deployment
+
+Convert .h5 to .tflite for Jetson Nano
+
+📝 License & Credits
+Open-source project for educational purposes.
+Dataset from UBFC-rPPG.
+Doctor info is for demo purposes only.
+
+
+
+
+
+
+
+
